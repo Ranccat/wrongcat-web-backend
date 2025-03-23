@@ -2,22 +2,25 @@ using Wrongcat.Api.Services;
 
 var builder = WebApplication.CreateBuilder(args);
 
-// Add services to the container.
 builder.Services.AddControllers();
-// builder.Services.AddScoped<DownloadService>();
+builder.Services.AddCors(options =>
+{
+    options.AddPolicy("AllowSpecificOrigins",
+        policy =>
+        {
+            policy.WithOrigins("http://localhost:5173")
+                .AllowAnyHeader()
+                .AllowAnyMethod();
+        });
+});
 
-// Build app using the configurations set in builder.
+builder.Services.AddScoped<IDownloadService, DownloadService>();
+
 var app = builder.Build();
 
-// Configure the HTTP request pipeline.
-// if (!app.Environment.IsDevelopment())
-// {
-//     app.UseDeveloperExceptionPage();
-// }
-
-app.UseHttpsRedirection();
 app.UseRouting();
 app.UseAuthorization();
+app.UseCors("AllowSpecificOrigins");
 app.MapControllers();
 
 app.Run();

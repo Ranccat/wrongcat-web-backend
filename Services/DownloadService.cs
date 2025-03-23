@@ -1,15 +1,15 @@
-using System.Net.WebSockets;
-
 namespace Wrongcat.Api.Services;
 
 public interface IDownloadService
 {
-  Task SendInstallerAsync(WebSocket webSocket);
+  Task<byte[]> GetPepeAsync();
 }
 
 public class DownloadService : IDownloadService {
-  public async Task SendInstallerAsync(WebSocket webSocket)
+  private const string PepeImagePath = "wwwroot/test-files/pepe.jpg";
+  
+  public async Task<byte[]> GetPepeAsync()
   {
-    // 
+    return await File.ReadAllBytesAsync(PepeImagePath);
   }
 }

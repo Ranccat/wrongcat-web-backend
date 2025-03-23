@@ -5,17 +5,22 @@ namespace Wrongcat.Api.Controllers;
 
 [ApiController]
 [Route("api/[controller]")]
-public class DownloadController(/*IDownloadService downloadService, */ILogger<DownloadController> logger)
+public class DownloadController(IDownloadService downloadService, ILogger<DownloadController> logger)
   : ControllerBase
 {
   [HttpGet("installer")]
   public async Task<IActionResult> DownloadInstaller()
   {
-    logger.Log(LogLevel.Information, "Received request for installer");
-    string filePath = "wwwroot/test-files/pepe.jpg";
+    // TODO
+    return StatusCode(404, "File not ready");
+  }
+
+  [HttpGet("pepe")]
+  public async Task<IActionResult> DownloadPepe()
+  {
     try
     {
-      var bytes= await System.IO.File.ReadAllBytesAsync(filePath);
+      var bytes = await downloadService.GetPepeAsync();
       return new FileContentResult(bytes, "image/jpeg");
     }
     catch (Exception e)
