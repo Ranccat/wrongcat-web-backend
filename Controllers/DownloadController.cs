@@ -1,12 +1,12 @@
 using Microsoft.AspNetCore.Mvc;
+
 using Wrongcat.Api.Services;
 
 namespace Wrongcat.Api.Controllers;
 
 [ApiController]
 [Route("api/[controller]")]
-public class DownloadController(IDownloadService downloadService, ILogger<DownloadController> logger)
-  : ControllerBase
+public class DownloadController(IDownloadService downloadService) : ControllerBase
 {
   [HttpGet("installer")]
   public async Task<IActionResult> DownloadInstaller()

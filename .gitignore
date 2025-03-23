@@ -73,3 +73,4 @@ _[Ss]cripts
 *.dot[Cc]over
 *.DotSettings
 wwwroot/
+.env
